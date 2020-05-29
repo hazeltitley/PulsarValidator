@@ -10,6 +10,9 @@ This program works in two modes:
 * Outputs from [PulsarClassifier](https://github.com/jacob-ian/PulsarClassifier).
 
 ## Usage
+1. Use [PulsarFeatureLab](https://github.com/scienceguyrob/PulsarFeatureLab.git) to generate a testing dataset from known pulsars and non-pulsars.
+1. Create a list of pulsars included in the testing dataset (one pulsar per line of the file).
+1. Use [PulsarClassifier](https://github.com/jacob-ian/PulsarClassifier.git) to classify the testing dataset.
 1. Download the file `pulsarvalidator-1.0-full.jar` located inside the `target` directory of this repository.
 1. Run the command:
 ```
