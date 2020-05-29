@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class ValidationMode {
      *                           file of the classifier.
      * @throws IOException
      */
-    public ValidationMode(String pulsarListPath, String postiveOutputPath, String negativeOutputPath)
+    public ValidationMode(String pulsarListPath, String positiveOutputPath, String negativeOutputPath)
             throws IOException {
 
         // Assign the variables
@@ -90,16 +91,25 @@ public class ValidationMode {
         int FP = allStatistics.getValueByName("FalsePositives");
         int TN = allStatistics.getValueByName("TrueNegatives");
         int FN = allStatistics.getValueByName("FalseNegatives");
-        int pulsarCount = allStatistics.getValueByName("Pulsars");
+
+        // To find the number of pulsars without generating a new list from the output data of 
+        // PulsarFeatureLab, we can just add the TruePositive count with the FalseNegative count.
+        // The same can be applied for non-pulsars
+        int pulsarCount = TP + FN;
+        int nonpulsarCount = TN + FP;
+
+        int pulsarsDetected = TP + FP;
+        int nonpulsarsDetected = TN + FN;
 
         // Output the statistics as a string
-        String output = "Number of Pulsars: " + pulsarCount; 
+        String output = "Number of Pulsars: " + pulsarCount;
+        output+= "\nPulsars Detected: " + pulsarsDetected;
         output+= "\nTrue Positives: " + TP;
         output+= "\nFalse Positives: " + FP;
+        output+= "\n\nNumber of Non-Pulsars: " + nonpulsarCount;
+        output+= "\nNon-Pulsars Detected: " + nonpulsarsDetected;
         output+= "\nTrue Negatives: " + TN;
         output+= "\nFalse Negatives: " + FN;
-        output+= "\nPositive Success Rate (TP/Pulsars): " + (TP/pulsarCount * 100) + "%";
-        output+= "\nNegative Success Rate (TN/Non-Pulsars): " + (TP/(FP+TN) * 100) + "%";
 
         // Return the output
         return output;
@@ -128,7 +138,7 @@ public class ValidationMode {
         for(String classification: classifier)
         {
             // Get the filename of the classification
-            String name = classification.substring(classification.lastIndexOf("/"), classification.length());
+            String name = classification.substring(classification.lastIndexOf("/")+1, classification.length());
 
             // Check if it is in the list of pulsars
             // Create search flag and index
@@ -169,11 +179,7 @@ public class ValidationMode {
         int truePositiveCount = truePositive.size();
         int falsePositiveCount = falsePositive.size();
 
-        // Count the number of pulsars
-        int pulsarCount = this.pulsars.size();
-
         // Add the statistics to the list
-        statistics.add("Pulsars", pulsarCount);
         statistics.add("TruePositives", truePositiveCount);
         statistics.add("FalsePositives", falsePositiveCount);
 
@@ -204,7 +210,7 @@ public class ValidationMode {
         for(String classification: classifier)
         {
             // Get the filename of the candidate
-            String name = classification.substring(classification.lastIndexOf("/"),classification.length());
+            String name = classification.substring(classification.lastIndexOf("/")+1,classification.length());
 
             // Create the loop variables
             boolean found = false;

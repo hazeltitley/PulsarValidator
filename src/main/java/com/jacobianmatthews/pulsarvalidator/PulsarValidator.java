@@ -42,13 +42,12 @@ public class PulsarValidator {
     // String containing the path to the negative classifier output
     private static String negativeClassifier;
 
-    public static void main(String[] args) throws IOException
-    {
+    public static void main(String[] args) throws IOException {
         // Get the input arguments
         getCliVariables(args);
 
         // Check to see which flag has been given
-        if ( list ){
+        if (list) {
             // LIST MODE CHOSEN
             // Print a message
             System.out.println("Pulsar list generation mode chosen.\n");
@@ -57,13 +56,20 @@ public class PulsarValidator {
             System.out.println("This feature is under development. Exiting program.");
             System.exit(0);
 
-
-
-        } else if ( validation ) {
+        } else if (validation) {
 
             // VALIDATION MODE CHOSEN
             // Print a message
-            System.out.println("Pulsar classifier validation mode chosen. \n");
+            System.out.println("\nPulsar classifier validation mode chosen.");
+
+            // Print the location of the pulsar list
+            System.out.println("\nPulsar list location: "+pulsarList);
+
+            // Print the location of the positive output file
+            System.out.println("Classifier positive output location: "+positiveClassifier);
+
+            // Print the location of the positive output file
+            System.out.println("Classifier negative output location: "+negativeClassifier);
 
             // Create the validation mode instance
             ValidationMode validationMode = new ValidationMode(pulsarList, positiveClassifier, negativeClassifier);
@@ -72,13 +78,12 @@ public class PulsarValidator {
             String output = validationMode.validate();
 
             // Output the string and then exit the program
-            System.out.println("Pulsar classifier validated successfully.\n");
+            System.out.println("\nPulsar classifier validated successfully.\n");
             System.out.println(output);
 
             System.exit(0);
 
-
-        } else if ( list && validation ){
+        } else if (list && validation) {
 
             // Display error that you can only do one thing at once
             System.out.println("'-l' and '-v' arguments entered. Please choose one mode only. \n");
@@ -86,7 +91,7 @@ public class PulsarValidator {
             // Exit the application
             System.exit(0);
 
-        } else if ( !list && !validation ){
+        } else if (!list && !validation) {
 
             // Display error that you need to pick a flag
             System.out.println("Please choose a mode by using this program with a '-l' or '-v' argument.\n");
@@ -95,15 +100,15 @@ public class PulsarValidator {
             System.exit(0);
         }
 
-
     }
 
     /**
-     * This function checks the command-line input arguments to decide how the program should be ran.
+     * This function checks the command-line input arguments to decide how the
+     * program should be ran.
      * 
      * @param args
      */
-    private static void getCliVariables( String[] args )
+    private static void getCliVariables(String[] args)
     {
 
         // Loop through arguments for the list and compare flags
