@@ -1,4 +1,4 @@
-package com.jacobianmatthews.pulsarvalidator;
+package com.jacobianmatthews.pulsarvalidator.utils;
 
 import java.util.ArrayList;
 import java.util.List;

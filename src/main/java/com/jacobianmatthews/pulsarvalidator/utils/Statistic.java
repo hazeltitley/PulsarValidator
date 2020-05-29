@@ -1,4 +1,4 @@
-package com.jacobianmatthews.pulsarvalidator;
+package com.jacobianmatthews.pulsarvalidator.utils;
 
 /**
  * This is a data object to hold a statistic for the classifier.

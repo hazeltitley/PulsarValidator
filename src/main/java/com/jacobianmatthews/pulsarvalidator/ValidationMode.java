@@ -9,6 +9,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.jacobianmatthews.pulsarvalidator.utils.StatisticList;
+import com.jacobianmatthews.pulsarvalidator.utils.Utilities;
+
 /**
  * This class contains the Pulsar Classifier validation mode of the program. It
  * will compare the output files of the Pulsar Classifier to the true list of
